@@ -1,6 +1,6 @@
 This repository contains example code used in a workshop on very basic
 use of R for use on multiple processors or multiple nodes, basically
-the ```parallel()``` functions ```mclapply()```, ```parLapply()``, and
+the ```parallel()``` functions ```mclapply()```, ```parLapply()```, and
 ```clusterApply()```.
 
 Based on work originally done by David Childers and Bennet Fauber for a
