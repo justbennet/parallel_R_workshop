@@ -9,21 +9,19 @@
 ###  Return:     estimated power for the generated sample and criteria
 ###
 
-t.power.sim = function(n, n.reps=1000, mean.1=0.0,mean.2=2.5,sd.common=1.0){
-
+t.power.sim = function(n, n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=1.0) {
   p.vals = rep(0,n.reps)
   
   for (i in 1:n.reps){
-    x1 = rnorm(n=n, mean=mean.1, sd=sd.common)
-    x2 = rnorm(n=n, mean=mean.2, sd=sd.common)
-    p.vals[i] = t.test(x1,x2)$p.value
+    group.1 = rnorm(n=n, mean=mean.1, sd=sd.common)
+    group.2 = rnorm(n=n, mean=mean.2, sd=sd.common)
+    p.vals[i] = t.test(group.x1, group.x2)$p.value
   }
-  
   power = sum(p.vals < .05)/n.reps
   return(power)
 }
 
-###  Illustrate function usage with a single calculate
+###  Illustrate function usage for a single sample size
 
 power.estimate <- t.power.sim(n=30,  n.reps=500,
                               mean.1=0.0,  mean.2=2.5,
