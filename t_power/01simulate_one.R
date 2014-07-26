@@ -28,7 +28,7 @@ writeLines(c(
     "\nThe first five p values from ", n.reps, " simulations\n\n",
     sprintf("%8.4f", p.vals[1:5]), "\n\n",
     "\nProportion of simulations where the difference\n",
-	"between the means was detected:\n\n",
-	sprintf("%8.4f", sum(p.vals <.05)/n.reps), "\n\n"),
+    "between the means was detected:\n\n",
+    sprintf("%8.4f", sum(p.vals <.05)/n.reps), "\n\n"),
     "test.out", sep='')
 
