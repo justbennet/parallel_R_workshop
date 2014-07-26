@@ -14,7 +14,7 @@ library(ggplot2)
 t.power.sim = function(n, n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=1.0) {
   p.vals = rep(0,n.reps)
 
-  for (i in 1:n.reps){
+  for (i in 1:n.reps) {
     group.1 = rnorm(n=n, mean=mean.1, sd=sd.common)
     group.2 = rnorm(n=n, mean=mean.2, sd=sd.common)
     p.vals[i] = t.test(group.1, group.2)$p.value
@@ -29,12 +29,12 @@ t.power.sim = function(n, n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=1.0) {
 power.array <- NULL
 
 #  Create a vector of sample sizes for which we want to estimate the power
-sample.sizes <- seq.int(20, 100, 5)  # 20, 25, 30,..., 100
+sample.sizes <- seq.int(20, 100, 5)
 
 #  Loop over the sample sizes and estimate power for each
 for (n in sample.sizes) {
-    temp.rslt <- t.power.sim(n=n, n.reps=1000, mean.2=2.5, sd.common=5.0)
-    power.array <- c(power.array, temp.rslt)
+    tmp.power <- t.power.sim(n=n, n.reps=1000, mean.2=2.5, sd.common=5.0)
+    power.array <- c(power.array, tmp.power)
 }
 
 #  Join power.list and sample.sizes into a data frame
