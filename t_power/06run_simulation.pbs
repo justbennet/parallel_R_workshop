@@ -1,0 +1,25 @@
+#!/bin/bash
+####  Begin PBS preamble
+
+#PBS -N 05simulate_mcl
+#PBS -M grundoon@umich.edu
+#PBS -m abe
+
+#PBS -l nodes=1:ppn=4
+#PBS -l walltime=15:00
+#PBS -V
+#PBS -j oe
+
+#PBS -A default_flux
+#PBS -l qos=flux
+#PBS -q flux
+
+####  End PBS preamble
+
+#  Include the next three lines always
+if [ "x${PBS_NODEFILE}" != "x" ] ; then
+   cat $PBS_NODEFILE   # contains a list of the CPUs you were using
+fi
+
+#  Put your job commands after this line
+R CMD BATCH 05simulate_mcl.R
