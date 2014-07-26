@@ -1,3 +1,5 @@
-Is the bug exercisable with one line? ```command```.
+We also set default values for the two group means, ```mean.1``` and
+```mean.2```, as well as for the common standard deviation, 
+```sd.common```.
 
-Some more text.
+The dots indicate what actually happens inside the function.
