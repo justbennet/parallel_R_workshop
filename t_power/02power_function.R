@@ -10,6 +10,7 @@
 ###
 
 t.power.sim = function(n, n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=1.0) {
+
   p.vals = rep(0,n.reps)
   
   for (i in 1:n.reps){
