@@ -1,11 +1,11 @@
 #!/bin/bash
 ####  Begin PBS preamble
 
-#PBS -N 06simulate_mcl
+#PBS -N 08run_simulate_parlapply
 #PBS -M bennet@umich.edu
 #PBS -m abe
 
-#PBS -l nodes=1:ppn=4
+#PBS -l nodes=2:ppn=2,tpn=2
 #PBS -l walltime=15:00
 #PBS -V
 #PBS -j oe
@@ -21,9 +21,9 @@ if [ "x${PBS_NODEFILE}" != "x" ] ; then
    cat $PBS_NODEFILE   # contains a list of the CPUs you were using
 fi
 
-#  Change to the PBS working directory
 cd $PBS_O_WORKDIR
 echo "Working from $(pwd)"
 
 #  Put your job commands after this line
-R CMD BATCH 06simulate_mcl_pbs.R
+mpirun -np 1 R_flux CMD BATCH 08simulate_parlapply.R
+

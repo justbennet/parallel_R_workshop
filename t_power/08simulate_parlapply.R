@@ -1,14 +1,6 @@
 library(ggplot2)
 library(parallel)
 
-#  Set the number of processors for mclapply from the environment
-#  variable PBS_NP, which is set by PBS when it starts a job.  This
-#  makes it possible to change the number of processors in the job
-#  script without modifying this R script.
-
-procs = as.numeric(Sys.getenv('PBS_NP'))
-options(cores = procs)
-
 #########################################
 ###  Function to calculate power for a t test
 ###
@@ -32,17 +24,27 @@ t.power.sim = function(n, n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=1.0) {
   return(power)
 }
 
-###  Ilustrate usage simulating multiple sample sizes
+###  Cluster setup
+#  NOTE:  You must run the initial R with
+#  mpirun -np 1 ...
+#  so that mpi.universe.size() is defined
+cl <- makeCluster(mpi.universe.size()-1, "MPI")
 
-#  Zero the list of estimated powers
-power.array <- NULL
+#  Make sure we really have workers...
+clusterCall(cl, function() paste("I am ", Sys.info()["nodename"], " rank ",
+    mpi.comm.rank(), " of ", mpi.comm.size()))
 
 #  Create a vector of sample sizes for which we want to estimate the power
 sample.sizes <- seq.int(20, 100, 5)
 
 #  Use lapply the t.power.sim function for each value in sample.sizes
-power.list <- mclapply(sample.sizes, FUN=t.power.sim,
+power.list <- parLapply(sample.sizes, FUN=t.power.sim,
                      n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=5.0)
+
+###  Cluster shutdown
+###  Make sure to end the script with mpi.quit() to properly close
+###  the MPI connections.
+stopCluster(cl)
 
 #  Join power.list and sample.sizes into a data frame
 power.dat <- data.frame(n=sample.sizes, power=unlist(power.list))
@@ -50,10 +52,10 @@ power.dat <- data.frame(n=sample.sizes, power=unlist(power.list))
 #  Print the values in a table
 writeLines(c(
 "\n\n",
-"Table of values from the power calculation using mclapply",
-"=========================================================",
+"Table of values from the power calculation using parLapply",
+"==========================================================",
 capture.output(print(power.dat)),
-"=========================================================\n\n"),
+"==========================================================\n\n"),
 "test.out", sep="\n")
 
 #  It is quite common to plot the power against the sample size
@@ -65,4 +67,7 @@ power.graph = power.graph + scale_y_continuous("Power", limits=c(0,1))
 power.graph = power.graph + geom_hline(yintercept=0.8, linetype="solid")
 power.graph
 dev.off()
+
+#  Close the MPI connections
+mpi.quit()
 
