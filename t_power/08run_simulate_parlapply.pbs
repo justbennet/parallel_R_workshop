@@ -1,7 +1,7 @@
 #!/bin/bash
 ####  Begin PBS preamble
 
-#PBS -N 07run_cluster_setup
+#PBS -N 08run_simulate_parlapply
 #PBS -M bennet@umich.edu
 #PBS -m abe
 
@@ -25,4 +25,5 @@ cd $PBS_O_WORKDIR
 echo "Working from $(pwd)"
 
 #  Put your job commands after this line
-mpirun -np 1 R_flux CMD BATCH 07cluster_setup.R
+mpirun -np 1 R_flux CMD BATCH 08simulate_parlapply.R
+
