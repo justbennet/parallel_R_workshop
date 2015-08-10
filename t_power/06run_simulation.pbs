@@ -2,7 +2,7 @@
 ####  Begin PBS preamble
 
 #PBS -N 06simulate_mcl
-#PBS -M bennet@umich.edu
+#PBS -M grundoon@umich.edu
 #PBS -m abe
 
 #PBS -l nodes=1:ppn=4
@@ -10,7 +10,7 @@
 #PBS -V
 #PBS -j oe
 
-#PBS -A support_flux
+#PBS -A hpc470_flux
 #PBS -l qos=flux
 #PBS -q flux
 
@@ -26,4 +26,4 @@ cd $PBS_O_WORKDIR
 echo "Working from $(pwd)"
 
 #  Put your job commands after this line
-R CMD BATCH 06simulate_mcl_pbs.R
+R CMD BATCH --no-save --no-restore 06simulate_mcl_pbs.R

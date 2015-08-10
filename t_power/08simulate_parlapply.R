@@ -37,8 +37,11 @@ clusterCall(cl, function() paste("I am ", Sys.info()["nodename"], " rank ",
 #  Create a vector of sample sizes for which we want to estimate the power
 sample.sizes <- seq.int(20, 100, 5)
 
+#  Send the sample sizes to the nodes so they can be used
+#  clusterExport(cl, list("sample.sizes"))
+
 #  Use lapply the t.power.sim function for each value in sample.sizes
-power.list <- parLapply(sample.sizes, FUN=t.power.sim,
+power.list <- parLapply(cl, sample.sizes, t.power.sim,
                      n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=5.0)
 
 ###  Cluster shutdown

@@ -25,6 +25,8 @@ t.power.sim = function(n, n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=1.0) {
 
 ###  Ilustrate usage simulating multiple sample sizes
 
+set.seed(42)
+
 #  Zero the list of estimated powers
 power.array <- NULL
 

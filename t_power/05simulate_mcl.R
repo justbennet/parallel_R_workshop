@@ -29,6 +29,8 @@ t.power.sim = function(n, n.reps=1000, mean.1=0.0, mean.2=2.5, sd.common=1.0) {
 #  Zero the list of estimated powers
 power.array <- NULL
 
+set.seed(42)
+
 #  Create a vector of sample sizes for which we want to estimate the power
 sample.sizes <- seq.int(20, 100, 5)
 
@@ -42,7 +44,7 @@ power.dat <- data.frame(n=sample.sizes, power=unlist(power.list))
 #  Print the values in a table
 writeLines(c(
 "\n\n",
-"Table of values from the power calculation using the for loop",
+"Table of values from the power calculation using mclapply",
 "=============================================================",
 capture.output(print(power.dat)),
 "=============================================================\n\n"),

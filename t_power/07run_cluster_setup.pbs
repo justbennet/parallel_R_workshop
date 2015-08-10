@@ -2,15 +2,15 @@
 ####  Begin PBS preamble
 
 #PBS -N 07run_cluster_setup
-#PBS -M bennet@umich.edu
+#PBS -M grundoon@umich.edu
 #PBS -m abe
 
-#PBS -l nodes=2:ppn=2,tpn=2
+#PBS -l nodes=2:ppn=2
 #PBS -l walltime=15:00
 #PBS -V
 #PBS -j oe
 
-#PBS -A support_flux
+#PBS -A hpc470_flux
 #PBS -l qos=flux
 #PBS -q flux
 
@@ -25,5 +25,4 @@ cd $PBS_O_WORKDIR
 echo "Working from $(pwd)"
 
 #  Put your job commands after this line
-mpirun -np 1 R_flux CMD BATCH 07cluster_setup.R
-
+mpirun -np 1 R_flux CMD BATCH --no-save --no-restore 07cluster_setup.R
