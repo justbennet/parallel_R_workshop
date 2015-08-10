@@ -110,6 +110,8 @@ a value and append it.  One other change is needed because the output is
 a list instead of an array, and that is to use ```unlist(power.list)```
 instead of just ```power.list``` when we create the data frame.
 
+### C
+
 
 
 
